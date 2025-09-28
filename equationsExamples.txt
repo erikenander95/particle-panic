@@ -1,0 +1,65 @@
+//
+//
+DOCS for equations with example values used in main.c for future reference.
+//
+//
+
+# Particle radius
+size = 15
+radius = size / 2
+radius = 15 / 2 = 7.5
+
+# Delta between particles
+Particle A: (50, 100)
+Particle B: (40, 90)
+dx = x1 - x2 = 50 - 40 = 10
+dy = y1 - y2 = 100 - 90 = 10
+
+# Distance between particle centers
+distance = sqrt(dx*dx + dy*dy)
+distance = sqrt(10*10 + 10*10) = sqrt(200) ≈ 14.142
+
+# Normal vector (direction between centers)
+normalX = dx / distance = 10 / 14.142 ≈ 0.707
+normalY = dy / distance = 10 / 14.142 ≈ 0.707
+
+# Overlap resolution
+radius1 = 7.5
+radius2 = 7.5
+combinedRadius = radius1 + radius2 = 7.5 + 7.5 = 15
+overlap = combinedRadius - distance = 15 - 14.142 ≈ 0.858
+move = overlap * 0.5 = 0.858 * 0.5 ≈ 0.429
+x1 += normalX * move = 50 + 0.707 * 0.429 ≈ 50.303
+y1 += normalY * move = 100 + 0.707 * 0.429 ≈ 100.303
+x2 -= normalX * move = 40 - 0.303 ≈ 39.697
+y2 -= normalY * move = 90 - 0.303 ≈ 89.697
+
+# Velocity along the normal
+vel_x = 3
+vel_y = 4
+vel_normal = vel_x * normalX + vel_y * normalY
+vel_normal = 3*0.707 + 4*0.707 ≈ 4.95
+
+# Tangent vector (perpendicular to normal)
+tangentX = -normalY = -0.707
+tangentY = normalX = 0.707
+
+# Velocity along the tangent
+vel_tangent = vel_x * tangentX + vel_y * tangentY
+vel_tangent = 3*(-0.707) + 4*0.707 ≈ 0.707
+
+# New velocities after collision
+vel_x_new = vel_normal * normalX + vel_tangent * tangentX
+vel_x_new = 4.95*0.707 + 0.707*(-0.707) ≈ 3
+vel_y_new = vel_normal * normalY + vel_tangent * tangentY
+vel_y_new = 4.95*0.707 + 0.707*0.707 ≈ 4
+
+# Bounce off screen edges
+screenWidth = 800
+screenHeight = 600
+bounceFactor = 0.8
+
+# Example: particle at (x, y) = (100, 608), radius = 7.5
+y + radius = 608 > screenHeight
+y = screenHeight - radius = 600 - 7.5 = 592.5
+vel_y = -vel_y * bounceFactor

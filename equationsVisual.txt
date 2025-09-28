@@ -1,0 +1,69 @@
+//
+//
+DOCS for equations with example values and visuals used in main.c for future reference.
+//
+//
+
+# Particle Example Positions
+Particle A: (50, 100), radius = 7.5
+Particle B: (40, 90), radius = 7.5
+
+# 1. Delta (difference in positions)
+dx = x1 - x2 = 50 - 40 = 10
+dy = y1 - y2 = 100 - 90 = 10
+
+# 2. Distance between centers
+distance = sqrt(dx*dx + dy*dy) = sqrt(10*10 + 10*10) ≈ 14.142
+
+# 3. Normal vector (line connecting centers)
+normalX = dx / distance ≈ 0.707
+normalY = dy / distance ≈ 0.707
+
+# Visual:
+#  Particle A (50,100) ●
+#                  \
+#                   \  normal vector ≈ (0.707,0.707)
+#                    \
+#  Particle B (40,90)  ●
+
+# 4. Overlap (how much they are intersecting)
+combinedRadius = 7.5 + 7.5 = 15
+overlap = combinedRadius - distance ≈ 0.858
+move = overlap * 0.5 ≈ 0.429
+
+# Move particles along normal to resolve overlap
+x1 += normalX * move ≈ 50.303
+y1 += normalY * move ≈ 100.303
+x2 -= normalX * move ≈ 39.697
+y2 -= normalY * move ≈ 89.697
+
+# Visual:
+# Particle A moves slightly toward top-right
+# Particle B moves slightly toward bottom-left
+
+# 5. Tangent vector (perpendicular to normal)
+tangentX = -normalY ≈ -0.707
+tangentY = normalX ≈ 0.707
+
+# Visual:
+#   tangent vector is perpendicular to the normal
+#        /
+#       /
+#  normal
+#      \
+#       \
+
+# 6. Velocity along normal and tangent
+vel_x = 3, vel_y = 4
+vel_normal = vel_x*normalX + vel_y*normalY ≈ 4.95
+vel_tangent = vel_x*tangentX + vel_y*tangentY ≈ 0.707
+
+# 7. New velocities after collision
+vel_x_new = vel_normal*normalX + vel_tangent*tangentX ≈ 3
+vel_y_new = vel_normal*normalY + vel_tangent*tangentY ≈ 4
+
+# 8. Bounce off screen edges
+screenWidth = 800, screenHeight = 600, bounceFactor = 0.8
+Example: y + radius = 608 > 600
+y = screenHeight - radius = 592.5
+vel_y = -vel_y * 0.8

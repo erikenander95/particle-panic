@@ -1,0 +1,56 @@
+//
+//
+DOCS for equations used in main.c for future reference.
+//
+//
+
+# Particle radius
+radius = size / 2
+
+# Delta between particles
+dx = x1 - x2
+dy = y1 - y2
+
+# Distance between particle centers
+distance = sqrt(dx*dx + dy*dy)
+
+# Normal vector (direction between centers)
+normalX = dx / distance
+normalY = dy / distance
+
+# Overlap resolution
+combinedRadius = radius1 + radius2
+overlap = combinedRadius - distance
+move = overlap * 0.5
+x1 += normalX * move
+y1 += normalY * move
+x2 -= normalX * move
+y2 -= normalY * move
+
+# Velocity along the normal
+vel_normal = vel_x * normalX + vel_y * normalY
+
+# Tangent vector (perpendicular to normal)
+tangentX = -normalY
+tangentY = normalX
+
+# Velocity along the tangent
+vel_tangent = vel_x * tangentX + vel_y * tangentY
+
+# New velocities after collision
+vel_x = vel_normal * normalX + vel_tangent * tangentX
+vel_y = vel_normal * normalY + vel_tangent * tangentY
+
+# Bounce off screen edges
+if y + radius > screenHeight:
+    y = screenHeight - radius
+    vel_y = -vel_y * bounceFactor
+if y - radius < 0:
+    y = radius
+    vel_y = -vel_y * bounceFactor
+if x + radius > screenWidth:
+    x = screenWidth - radius
+    vel_x = -vel_x * bounceFactor
+if x - radius < 0:
+    x = radius
+    vel_x = -vel_x * bounceFactor
