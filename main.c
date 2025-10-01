@@ -46,7 +46,7 @@ int particle_count;
 struct Particle particle_array[1024];
 
 int main(){
-    InitWindow(800, 600, "Particles");
+    InitWindow(1920, 1080, "Particle Panic!");
     HideCursor();
 
     // Keeps track of when previous particle spawned and limits when a new one can spawn again.
@@ -174,9 +174,9 @@ int main(){
             
             // Make balls stop at edges of screen and bounce
             // Change *0.8 value to increase or decrease bounce force.
-            if (particle_array[i].pos.y + particle_array[i].rad.radius > 600)
+            if (particle_array[i].pos.y + particle_array[i].rad.radius > 1080)
                 {
-                    particle_array[i].pos.y = 600 - particle_array[i].rad.radius;
+                    particle_array[i].pos.y = 1080 - particle_array[i].rad.radius;
                     particle_array[i].vel.y_velocity = -particle_array[i].vel.y_velocity * 0.8;
                 }
             if (particle_array[i].pos.y - particle_array[i].rad.radius < 0)
@@ -184,9 +184,9 @@ int main(){
                     particle_array[i].pos.y = 0 + particle_array[i].rad.radius;
                     particle_array[i].vel.y_velocity = -particle_array[i].vel.y_velocity * 0.8;
                 }
-            if (particle_array[i].pos.x + particle_array[i].rad.radius > 800)
+            if (particle_array[i].pos.x + particle_array[i].rad.radius > 1920)
                 {
-                    particle_array[i].pos.x = 800 - particle_array[i].rad.radius;
+                    particle_array[i].pos.x = 1920 - particle_array[i].rad.radius;
                     particle_array[i].vel.x_velocity = -particle_array[i].vel.x_velocity * 0.8;
                 }
             if (particle_array[i].pos.x - particle_array[i].rad.radius < 0)
